@@ -9,6 +9,9 @@ const ContactForm = () => {
   const onSubmit = (data) => {
     setData(data);
   };
+  const handleChange = event => {
+    setData({ ...data, [event.target.name]: event.target.value });
+  };
 
   return (
     <div className="App">
@@ -17,8 +20,11 @@ const ContactForm = () => {
           <label htmlFor="firstName">First Name*</label>
           <input
             name="firstName"
+            id='firstName'
+            type='text'//added type text
             placeholder="Edd"
-            ref={register({ required: true, maxLength: 3 })}
+            onChange={event => handleChange(event)}
+            ref={register({ required: true, minLength: 3 })}//changed in minLength
           />
           {errors.firstName && (
             <p>Looks like there was an error: {errors.firstName.type}</p>
@@ -29,7 +35,9 @@ const ContactForm = () => {
           <label htmlFor="lastName">Last Name*</label>
           <input
             name="lastName"
+            id='lastName'
             placeholder="Burke"
+            onChange={event => handleChange(event)}
             ref={register({ required: true })}
           />
           {errors.lastName && (
@@ -41,14 +49,14 @@ const ContactForm = () => {
           <label htmlFor="email" placeholder="bluebill1049@hotmail.com">
             Email*
           </label>
-          <input name="email" ref={register({ required: true })} />
+          <input name="email" id='email' type='email' onChange={event => handleChange(event)} ref={register({ required: true })} />
           {errors.email && (
             <p>Looks like there was an error: {errors.email.type}</p>
           )}
         </div>
         <div>
           <label htmlFor="message">Message</label>
-          <textarea name="message" ref={register({ required: false })} />
+          <textarea name="message" id='message' onChange={event => handleChange(event)} ref={register({ required: false })} />
         </div>
         {data && (
           <pre style={{ textAlign: "left", color: "white" }}>
